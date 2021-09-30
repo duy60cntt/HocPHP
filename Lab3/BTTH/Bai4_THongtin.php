@@ -3,16 +3,13 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="myStyle.css">
     <title>Nhập thông tin</title>
 </head>
 
 <body>
     <fieldset class="my-form">
         <legend>Enter your information</legend>
-        <form action="Bai4_xuLyThongTin.php" method="post" class="my-form no-border">
+        <form action="Bai4_KQ.php" method="post" class="my-form no-border">
             <div class="grid-container">
                 Họ tên:
                 <input type="text" name="hoTen">
