@@ -1,11 +1,16 @@
 <!DOCTYPE html>
+<html lang="en">
+
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-	<title>Xử lý n</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="../../css/myStyle.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 2</title>
 </head>
 <style>
         table {
-            width: 600px;
+            width: 500px;
             margin: auto;
             background-color: gray;
         }
@@ -31,13 +36,16 @@
         }
     </style>
 <body>
-<?php
-    $dayso=trim($_POST['dayso1']); 
-    $arr=array($dayso);
-    if(isset($_POST['tinh'])) {
-        $ketqua="Mảng được tạo là: " .implode(" ",$arr)."&#13;&#10;";
+    <?php
+    $daySo = $_POST['daySo'] ?? '';
+    $tongDaySo = $_POST['tongDaySo'] ?? '';
+
+    if (isset($_POST['submit'])){
+        $mang = explode(',', $daySo);
+        $tongDaySo = array_sum($mang);
     }
-?>
+    ?>
+
 <form action="" method="post">
         <table>
             <tr id="ten">
@@ -50,7 +58,7 @@
                    Nhập dãy số:
                 </td>
                 <td>
-                    <input type="text" name="dayso1" value="">
+                <input type="text" name="daySo" value="<?php echo $daySo ?>">
                 </td>
                 <td style="color:red">(*)</td>
             </tr>
@@ -59,7 +67,7 @@
                     
                 </td>
                 <td>
-                <button type="submit" name="tinh">Tổng dãy số</button>
+                <input type="submit" name="submit" value="Tổng dãy số" class="half-size">
                 </td>
             </tr>
             <tr>
@@ -67,10 +75,19 @@
                    Tổng dãy số:
                 </td>
                 <td>
-                    <input type="text" name="ht" disabled="disabled" value="<?php echo $ketqua; ?>">
+                <input type="text" name="tongDaySo" disabled value="<?php echo $tongDaySo ?>">
                 </td>
             </tr>
+            <tr>
+                <td>
+                </td>
+                <td>
+                <span style="color: red;">(*)</span>Các số được nhập cách nhau bằng dấu ","
+                </td>
+            </tr>
+            
         </table>
     </form>
-    </body>
+</body>
+
 </html>
