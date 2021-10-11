@@ -1,160 +1,159 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html >
+<html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Bài 2</title>
 </head>
 
 <body>
-<?php
-class PHAN_SO
-{	var $tuso, $mauso;
-	function get_tuso()
-	{	return $this-> tuso;
-		
-	}
-	function set_tuso($value)
-	{	$this->tuso=$value;
-		
-		}
-	function get_mauso()
-	{	return $this->mauso;
-		}	
-	function set_mauso($value)
-	{
-		$this->mauso=$value;
-	}
-	function khoitao_ps($p_ts, $p_ms)
-	{
-		$this->tuso=$p_ts;
-		$this->mauso=$p_ms;
-	}
-	//tim USCLN cua 2 so
-	function USCLN($a,$b)
-	{	//neu phan so am thi doi dau cua tu so
-		if($a<0) $a=(-1)*$a;
-		$sonho=($a<$b)? $a :$b;
-		for($i=$sonho;$i>0;$i--)
-			if(($a%$i)==0 && ($b%$i)==0)
-			{	//return $i;
-				break;
-			}
-		return $i;
-	
-	}
-	//toi gian phan so
-	function toigian_ps()
-	{	$uscln=$this->USCLN($this->tuso, $this->mauso);
-		$this->tuso=$this->tuso/$uscln;
-		$this->mauso=$this->mauso/$uscln;
-		
-	}
-	//tinh tong hai phan so
-	function tong($p_tuso,$p_mauso)
-	{	$ps= new PHAN_SO();
-		$ps->khoitao_ps($p_tuso,$p_mauso);
-		$ps->tuso=($this->tuso*$ps->mauso)+ ($ps->tuso*$this->mauso);
-		$ps->mauso= $this->mauso*$ps->mauso;
-		$ps->toigian_ps();
-		return $ps;		
-	}
-	//tinh hieu 2 phan so
-	function hieu($p_tuso,$p_mauso)
-	{	$ps= new PHAN_SO();
-		$ps->khoitao_ps($p_tuso,$p_mauso);
-		$ps->tuso=($this->tuso*$ps->mauso)- ($ps->tuso*$this->mauso);
-		$ps->mauso= $this->mauso*$ps->mauso;
-		//$ps->toigian_ps();
-		return $ps;
-	}
-    function tich($p_tuso,$p_mauso)
+    <?php
+    class PHAN_SO
     {
-        
+        var $tuSo, $mauSo;
+        function getTuSo()
+        {
+            return $this->tuSo;
+        }
+        function getMauSo()
+        {
+            return $this->mauSo;
+        }
+        function __construct($p_ts = 1, $p_ms = 1)
+        {
+            $this->tuSo = $p_ts;
+            $this->mauSo = $p_ms;
+        }
+        // kiểm tra mẫu số khác 0 và tử số và mẫu số là số tự nhiên
+        function laPhanSo()
+        {
+            return $this->mauSo != 0
+                && is_numeric($this->tuSo) && is_numeric($this->mauSo);
+        }
+        //tìm ước chung lớn nhất của a và b
+        function uocChungLonNhat($a, $b)
+        {
+            return ($a % $b) ? $this->uocChungLonNhat($b, $a % $b) : $b;
+        }
+
+        function toiGianPhanSo()
+        {
+            $uocChungLonNhat = $this->uocChungLonNhat($this->tuSo, $this->mauSo);
+            $this->tuSo = $this->tuSo / $uocChungLonNhat;
+            $this->mauSo = $this->mauSo / $uocChungLonNhat;
+            // tử số dương và mẫu số âm thì chuyển dấu - lên tử số
+            if($this->tuSo > 0 && $this->mauSo < 0){
+                $this->tuSo = -$this->tuSo;
+                $this->mauSo = -$this->mauSo;
+            }
+        }
+
+        function tongHaiPhanSo($p_tuso, $p_mauso)
+        {
+            $ps = new PHAN_SO($p_tuso, $p_mauso);
+            $ps->tuSo = ($this->tuSo * $ps->mauSo) + ($ps->tuSo * $this->mauSo);
+            $ps->mauSo = $this->mauSo * $ps->mauSo;
+            $ps->toiGianPhanSo();
+            return $ps;
+        }
+
+        function hieuHaiPhanSo($p_tuso, $p_mauso)
+        {
+            $ps = new PHAN_SO($p_tuso, $p_mauso);
+            $ps->tuSo = ($this->tuSo * $ps->mauSo) - ($ps->tuSo * $this->mauSo);
+            $ps->mauSo = $this->mauSo * $ps->mauSo;
+            $ps->toiGianPhanSo();
+            return $ps;
+        }
+
+        function tichHaiPhanSo($p_tuso, $p_mauso)
+        {
+            $ps = new PHAN_SO($p_tuso, $p_mauso);
+            $ps->tuSo = $this->tuSo * $ps->tuSo;
+            $ps->mauSo = $this->mauSo * $ps->mauSo;
+            $ps->toiGianPhanSo();
+            return $ps;
+        }
     }
-		
-}
+    $tuSo_1 = $_POST['tuSo_1'] ?? '';
+    $mauSo_1 = $_POST['mauSo_1'] ?? '';
+    $tuSo_2 = $_POST['tuSo_2'] ?? '';
+    $mauSo_2 = $_POST['mauSo_2'] ?? '';
+    $phepTinh = $_POST['phepTinh'] ?? 'cộng';
 
-?>
-<?php
-	$tuso_1=isset($_POST['tuso_1'])?$_POST['tuso_1']:'';
-	$mauso_1=isset($_POST['mauso_1'])?$_POST['mauso_1']:'';
-	$tuso_2=isset($_POST['tuso_2'])?$_POST['tuso_2']:'';
-	$mauso_2=isset($_POST['mauso_2'])?$_POST['mauso_2']:'';
-?>
+    $ps_1 = new PHAN_SO($tuSo_1, $mauSo_1);
+    $ps_2 = new PHAN_SO($tuSo_2, $mauSo_2);
 
-<form id="form1" name="form1" method="post" action="">
-  	<p><label><strong><font color="#6600FF"> Chọn phép tính trên phân số</font></strong></label>&nbsp;</p>
-  	<p>Nhập phân số thứ 1: Tử số:
-    	<input name="tuso_1" type="text" id="tuso_1" size="10" maxlength="10" value="<?php echo $tuso_1?>"/> 
-    	Mẫu số:
-    	<input name="mauso_1" type="text" id="mauso_1" size="10" maxlength="10" value="<?php echo $mauso_1?>"/>
-  	</p>
-  	<p>Nhập phân số thứ 2: Tử số: 
-    	<input name="tuso_2" type="text" id="tuso_2" size="10" maxlength="10" value="<?php echo $tuso_2?>"/>
-  		Mẫu số: 
-  		<input name="mauso_2" type="text" id="mauso_2" size="10" maxlength="10" value="<?php echo $mauso_2?>"/>
-  	</p>
- 	<fieldset>
-    	<legend>Chọn phép tính</legend>
-    	<p>
-    		<label>
-        		<input type="radio" name="pheptinh" value="cộng" 
-        			<?php if(isset($_POST['pheptinh'])&&($_POST['pheptinh'])=="cộng") echo 'checked'?>  />
-        			Cộng
-        	</label>
-    
-      		<label>
-        		<input type="radio" name="pheptinh" value="trừ"  
-        			<?php if(isset($_POST['pheptinh'])&&($_POST['pheptinh'])=="trừ") echo 'checked'?>/>
-        		Trừ
-    		</label>
+    $ketQua = '';
+    $chuoiKetQua = '';
+    if (isset($_POST['tinh'])) {
+        if ($ps_1->laPhanSo() && $ps_2->laPhanSo()) {
+            switch ($phepTinh) {
+                case "cộng":
+                    $ps = new PHAN_SO();
+                    $ps = $ps_1->tongHaiPhanSo($ps_2->tuSo, $ps_2->mauSo);
+                    $ketQua = $ps_1->getTuSo() . "/" . $ps_1->getMauSo() . " + " . $ps_2->getTuSo() . "/" . $ps_2->getMauSo() . " = " . $ps->getTuSo() . "/" . $ps->getMauSo();
+                    break;
+                case "trừ":
+                    $ps = new PHAN_SO();
+                    $ps = $ps_1->hieuHaiPhanSo($ps_2->tuSo, $ps_2->mauSo);
+                    $ketQua = $ps_1->getTuSo() . "/" . $ps_1->getMauSo() . " - " . $ps_2->getTuSo() . "/" . $ps_2->getMauSo() . " = " . $ps->getTuSo() . "/" . $ps->getMauSo();
+                    break;
+                case "nhân":
+                    $ps = new PHAN_SO();
+                    $ps = $ps_1->tichHaiPhanSo($ps_2->tuSo, $ps_2->mauSo);
+                    $ketQua = $ps_1->getTuSo() . "/" . $ps_1->getMauSo() . " * " . $ps_2->getTuSo() . "/" . $ps_2->getMauSo() . " = " . $ps->getTuSo() . "/" . $ps->getMauSo();
+                    break;
+                case "chia":
+                    $ps = new PHAN_SO();
+                    // chia phân số là nhân nghịch đảo phân số
+                    $ps = $ps_1->tichHaiPhanSo($ps_2->mauSo, $ps_2->tuSo);
+                    $ketQua = $ps_1->getTuSo() . "/" . $ps_1->getMauSo() . " : " . $ps_2->getTuSo() . "/" . $ps_2->getMauSo() . " = " . $ps->getTuSo() . "/" . $ps->getMauSo();
+                    break;
+            }
+            $chuoiKetQua = "Phép " . $phepTinh . " là : " . $ketQua;
+        } else {
+            $chuoiKetQua = 'Phân số không hợp lệ';
+        }
+    }
+    ?>
 
+    <form method="post" action="" class="my-form">
+        <p style="color: blue; font-weight: bold;">Chọn phép tính trên phân số</p>
+        <p>Nhập phân số thứ 1: Tử số:
+            <input name="tuSo_1" type="text" maxlength="10" value="<?php echo $tuSo_1 ?>" />
+            Mẫu số:
+            <input name="mauSo_1" type="text" maxlength="10" value="<?php echo $mauSo_1 ?>" />
+        </p>
+        <p>Nhập phân số thứ 2: Tử số:
+            <input name="tuSo_2" type="text" maxlength="10" value="<?php echo $tuSo_2 ?>" />
+            Mẫu số:
+            <input name="mauSo_2" type="text" maxlength="10" value="<?php echo $mauSo_2 ?>" />
+        </p>
+        <fieldset>
+            <legend>Chọn phép tính</legend>
             <label>
-        		<input type="radio" name="pheptinh" value="tích" 
-        			<?php if(isset($_POST['pheptinh'])&&($_POST['pheptinh'])=="tích") echo 'checked'?>  />
-        			Tích
-        	</label>
-
+                <input type="radio" name="phepTinh" value="cộng" <?php if ($phepTinh == "cộng") echo 'checked' ?> />Cộng
+            </label>
             <label>
-        		<input type="radio" name="pheptinh" value="thương" 
-        			<?php if(isset($_POST['pheptinh'])&&($_POST['pheptinh'])=="thương") echo 'checked'?>  />
-        			Thương
-        	</label>
-    	</p>
-	</fieldset>
-  	<p>
-    	<input name="Chon_pheptinh" type="submit" value="Kết quả" />
-  	</p>
- 
-</form>
-<?php
-	$ps_1=new PHAN_SO();
-	$ps_1->set_tuso($tuso_1);
-	$ps_1->set_mauso($mauso_1);
-	$ps_2=new PHAN_SO();
-	$ps_2->khoitao_ps($tuso_2,$mauso_2);
-	$ketqua="";
-	if (isset($_POST['Chon_pheptinh'])) 
-	{
-		$pheptinh=$_POST['pheptinh'];
-		switch($pheptinh)
-		{	case "cộng": 
-						$ps=new PHAN_SO();
-						$ps=$ps_1->tong($ps_2->tuso,$ps_2->mauso);
-						$ketqua=$ps_1->get_tuso()."/".$ps_1->get_mauso()."+".$ps_2->get_tuso()."/".$ps_2->get_mauso()."=".$ps->get_tuso()."/".$ps->get_mauso();
-						break;
-			case "trừ":
-						$ps=new PHAN_SO();
-						$ps=$ps_1->hieu($ps_2->tuso,$ps_2->mauso);
-						$ketqua=$ps_1->get_tuso()."/".$ps_1->get_mauso()."-".$ps_2->get_tuso()."/".$ps_2->get_mauso()."=".$ps->get_tuso()."/".$ps->get_mauso();
-						break;
-			case "tích":
+                <input type="radio" name="phepTinh" value="trừ" <?php if ($phepTinh == "trừ") echo 'checked' ?> />Trừ
+            </label>
+            <label>
+                <input type="radio" name="phepTinh" value="nhân" <?php if ($phepTinh == "nhân") echo 'checked' ?> />Nhân
+            </label>
+            <label>
+                <input type="radio" name="phepTinh" value="chia" <?php if ($phepTinh == "chia") echo 'checked' ?> />Chia
+            </label>
+        </fieldset>
+        <br>
+        <div class="center">
+            <input name="tinh" type="submit" value="Kết quả" />
+        </div>
+    </form>
 
-		}
-		echo "Phép ".$pheptinh." là : ". $ketqua;
-	}
-	
-?>
+    <?php
+    echo $chuoiKetQua;
+    ?>
 </body>
-</html>
 
+</html>
