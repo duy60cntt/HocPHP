@@ -15,7 +15,7 @@ session_start();
 ?>
 
 <?php
-if (isset($_SESSION['use'])) echo 'Bạn đã đăng nhập với tên tài khoản'.$_SESSION['use'];
+if (isset($_SESSION['use'])) echo 'Bạn đã đăng nhập với tên tài khoản '.$_SESSION['use'];
 else header('Location: Login.php');
 
 if (isset($_POST['TENPHONG'])) $TENPHONG = ($_POST['TENPHONG']); else $TENPHONG = "";

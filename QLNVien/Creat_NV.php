@@ -3,8 +3,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>them</title>
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap.min.css">
-	<script src="vendor/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -15,7 +13,7 @@ session_start();
 ?>
 
 <?php
-if (isset($_SESSION['use'])) echo 'Bạn đã đăng nhập với tên tài khoản'.$_SESSION['use'];
+if (isset($_SESSION['use'])) echo 'Bạn đã đăng nhập với tên tài khoản '.$_SESSION['use'];
 else header('Location: login.php');
 if (isset($_POST['MANV'])) $MANV = ($_POST['MANV']); else $MANV = "";
 if (isset($_POST['HOTEN'])) $HOTEN = ($_POST['HOTEN']); else $HOTEN = "";
@@ -63,24 +61,29 @@ if (isset($_POST['HOTEN']))
 
 // Check if $uploadOk is set to 0 by an error
     if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
+        echo "Không thêm đu";
 // if everything is ok, try to upload file
     } else {
         if (move_uploaded_file($_FILES["ANH"]["tmp_name"], $target_file)) {
-            echo "The file " . htmlspecialchars(basename($_FILES["ANH"]["name"])) . " has been uploaded.";
+            echo "Thêm thành công";
         } else {
             echo "Sorry, there was an error uploading your file.";
         }
     }
 }
 
+if (isset($_FILES["ANH"])) {
+    echo "<br>Định dạng ảnh là  $imageFileType<br>";
+    echo "<br>Dung lượng ảnh là <br>";
+    echo $_FILES["ANH"]["size"]."<br>";
+    $ANH = basename($_FILES["ANH"]["name"]);
+} else $ANH = "";
 
 
 
 
-
-if (isset($_POST['MALOAINV'])) $MALOAINV = $_POST['MALOAINV']; else $MALOAINV = "";
-if (isset($_POST['MAPHONG'])) $MAPHONG = $_POST['MAPHONG']; else $MAPHONG = "";
+if (isset($_POST['MALOAINV'])) $MALOAINV = $_POST['MALOAINV']; else $MALOAINV = "2";
+if (isset($_POST['MAPHONG'])) $MAPHONG = $_POST['MAPHONG']; else $MAPHONG = "2";
 
 if (isset($_POST['HOTEN'])) {
     $sql = "INSERT INTO `nhanvien` (`MANV`, `HOTEN`, `NGASINH`, `GIOITINH`, `DIACHI`, `ANH`, `MALOAINV`, `MAPHONG`) VALUES ('$MANV','$HOTEN','$NGASINH','$GIOITINH', '$DIACHI','$ANH','$MALOAINV','$MAPHONG')";
@@ -99,8 +102,7 @@ if (isset($_POST['HOTEN'])) {
 
 
 <form method="post"  enctype="multipart/form-data">
-    <table align='center' width='800' border='1' cellpadding='2' cellspacing='2' 
-				style='border-collapse: collapse;'>
+    <table border="1" cellspacing="0" cellpadding="10">
     <tr>
             <td>Mã NV</td>
             <td>
@@ -122,8 +124,8 @@ if (isset($_POST['HOTEN'])) {
         <tr>
             <td>Giới tính</td>
             <td>
-                Nam <input type="radio" name="GIOITINH" value="0" />
-                Nữ <input type="radio" name="GIOITINH" value="1" />
+                Nam <input type="radio" name="GIOITINH" value="1" />
+                Nữ <input type="radio" name="GIOITINH" value="0" />
             </td>
         </tr>
         <tr>
@@ -140,7 +142,7 @@ if (isset($_POST['HOTEN'])) {
             </td>
         </tr>
         <tr>
-            <td>Mã loại nhân viên</td>
+            <td>Loại nhân viên</td>
             <td>
 <!--                <input type="text" name="MALOAINHANVIEN" />-->
 

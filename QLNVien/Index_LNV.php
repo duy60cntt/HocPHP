@@ -14,7 +14,7 @@ session_start();
 ?>
 
 <?php
-if (isset($_SESSION['use'])) echo 'Bạn đã đăng nhập với tên tài khoản'.$_SESSION['use'];
+if (isset($_SESSION['use'])) echo 'Bạn đã đăng nhập với tên tài khoản '.$_SESSION['use'];
 else header('Location: Login.php');
 ?>
 <form method="post" action="Logout.php">
@@ -58,7 +58,7 @@ else header('Location: Login.php');
                 <td><?php echo $dulieu['MALOAINV']; ?></td>
                 <td><?php echo $dulieu['TENLOAINV']; ?> </td>
                 <td>
-                    <a onclick=" return confirm('bạn có chắc muốn sửa không')" href="Update_LNV.php?id=<?php echo $dulieu['id'] ?>" title="sửa">Sửa
+                    <a onclick=" return confirm('bạn có chắc muốn sửa không')" href="Update_LNV.php?id=<?php echo $dulieu['MALOAINV'] ?>" title="sửa">Sửa
                     </a>
                 </td>
                 <td>
@@ -71,11 +71,5 @@ else header('Location: Login.php');
         </table>
     </div>
 </div>
-<script>
-    function dang_Xuat(){
-            location.replace("Login.php");
-        }
-</script>
-
 </body>
 </html>
