@@ -36,10 +36,9 @@ if (isset($_POST['TENPHONG']) && isset($_POST['MAPHONG'])) {
 </form>
 
 <form method="post">
-    <table border="1" cellspacing="0" cellpadding="10">
-        
+    <table border="1" cellspacing="0" cellpadding="10">       
         <tr>
-            <td>Phong Ban</td>
+            <td>Phòng Ban</td>
             
             <td>
             <input type="text" name="MAPHONG" />
